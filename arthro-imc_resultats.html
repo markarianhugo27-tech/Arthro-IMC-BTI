@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arthro-IMC | Résultats Clés</title>
+    <link rel="stylesheet" href="style1.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header-nav">
+      <div class="logo"><a href="index.html">ARTHRO-IMC</a></div>
+      <nav>
+        <ul class="menu-flex">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="arthro-imc_etat_art.html">État de l'Art</a></li>
+          <li><a href="arthro-imc_protocole.html">Protocole</a></li>
+          <li><a href="arthro-imc_resultats.html">Résultats</a></li>
+          <li><a href="arthro-imc_articles.html">Articles</a></li>
+          <li><a href="planification.html">Planification</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="main-grid">
+      <aside class="sidebar-toc">
+        <h3>Synthèse des Résultats</h3>
+        <ul>
+          <li><a href="#resultats-force">Force Musculaire vs. IMC</a></li>
+          <li><a href="#resultats-modele">Modélisation des Contraintes</a></li>
+          <li><a href="#conclusion">Conclusion et Perspectives</a></li>
+        </ul>
+      </aside>
+
+      <main class="contenu-principal">
+        <h1>Résultats Clés de l'Étude</h1>
+        <p>
+          Cette page présente les résultats statistiques et les sorties de la
+          modélisation biomécanique, établissant le lien entre la composition
+          corporelle, la force musculaire, et la charge articulaire.
+        </p>
+
+        <section id="resultats-force" class="card">
+          <h2>1. Corrélation Force Musculaire, Masse Maigre et IMC</h2>
+          <p>
+            L'analyse statistique comparative (ANOVA) révèle une différence
+            significative de la Force Maximale Volontaire (MVC) du quadriceps et
+            de l'ischio-jambier entre les groupes d'IMC. La masse maigre
+            apparaît comme un facteur clé.
+          </p>
+
+          <div class="figure-container">
+            <img
+              src="placeholder_graphique_force.jpg"
+              alt="Graphique comparant la force musculaire moyenne (MVC) et la corrélation entre la masse maigre et le score WOMAC chez les groupes IMC."
+              class="content-img"
+            />
+          </div>
+
+          <h3>Points Clés Statistiques</h3>
+          <ul>
+            <li>
+              **Diminution de la Force :** La force MVC moyenne des membres
+              inférieurs diminue proportionnellement à l'augmentation de la
+              catégorie d'IMC.
+            </li>
+            <li>
+              **Rôle Protecteur de la LBM :** L'analyse de régression confirme
+              que la Masse Maigre (LBM) est significativement corrélée
+              négativement avec les scores de douleur et d'incapacité
+              fonctionnelle (WOMAC), suggérant un effet protecteur de la
+              musculature, même en présence de surpoids.
+            </li>
+            <li>
+              **Activation Neuromusculaire (EMG) :** L'analyse EMG a montré une
+              efficacité d'activation neuromusculaire réduite chez les sujets
+              obèses, pouvant indiquer une inhibition arthrogénique ou un effort
+              musculaire plus difficile à maintenir.
+            </li>
+          </ul>
+        </section>
+
+        <section id="resultats-modele" class="card">
+          <h2>2. Visualisation des Contraintes Biomécaniques (Modèle FE)</h2>
+          <p>
+            Le modèle d'éléments finis (FE), alimenté par les données
+            anthropométriques et de force (MVC/EMG) de nos participants, permet
+            de visualiser la répartition des contraintes de compression sur le
+            cartilage fémoro-tibial.
+          </p>
+
+          <div class="figure-container">
+            <img
+              src="placeholder_modele_contraintes.jpg"
+              alt="Simulation biomécanique (Modèle FE) des contraintes de compression sur le cartilage du genou, montrant les zones de haute pression (en rouge) chez un sujet à IMC élevé."
+              class="content-img"
+            />
+          </div>
+
+          <h3>Interprétation du Modèle</h3>
+          <ul>
+            <li>
+              **Surcharges Localisées :** Le modèle prédit des zones de
+              contraintes de compression nettement plus élevées et non uniformes
+              dans le compartiment médial du genou des sujets obèses.
+            </li>
+            <li>
+              **Impact du Déficit de Force :** La simulation montre que le
+              déficit de force musculaire observé (MVC réduite) chez les sujets
+              obèses aggrave la concentration des contraintes articulaires par
+              manque de stabilisation dynamique.
+            </li>
+            <li>
+              **Prédiction Affinée :** Ce modèle intègre l'effet mécanique du
+              poids et l'effet biologique (faiblesse musculaire), offrant une
+              prédiction du risque d'usure plus précise que la simple
+              utilisation de l'IMC.
+            </li>
+          </ul>
+        </section>
+
+        <section id="conclusion" class="card">
+          <h2>3. Conclusion des Résultats</h2>
+          <p>
+            Ces données confirment l'hypothèse centrale du projet : l'IMC est un
+            indicateur insuffisant. Le risque d'arthrose est mieux prédit par la
+            combinaison de la **masse maigre (LBM)**, qui agit comme un
+            bouclier, et des **déficits de force musculaire**, qui altèrent la
+            répartition dynamique des charges.
+          </p>
+        </section>
+      </main>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

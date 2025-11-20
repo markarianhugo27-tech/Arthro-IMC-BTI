@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arthro-IMC | Accueil</title>
+    <link rel="stylesheet" href="style1.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header-nav">
+      <div class="logo"><a href="arthro-imc_accueil.html">ARTHRO-IMC</a></div>
+      <nav>
+        <ul class="menu-flex">
+          <li><a href="arthro-imc_accueil.html">Accueil</a></li>
+          <li><a href="arthro-imc_etat_art.html">État de l'Art</a></li>
+          <li><a href="arthro-imc_protocole.html">Protocole</a></li>
+          <li><a href="arthro-imc_resultats.html">Résultats</a></li>
+          <li><a href="arthro-imc_articles.html">Articles</a></li>
+          <li><a href="planification.html">Planification</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="main-grid">
+      <aside class="sidebar-toc">
+        <h3>Navigation Rapide</h3>
+        <ul>
+          <li><a href="#imc-calculator">Calculateur d'IMC</a></li>
+          <li><a href="#introduction">Introduction au Projet</a></li>
+          <li><a href="#enjeux">Enjeux de l'Étude</a></li>
+        </ul>
+      </aside>
+
+      <main class="contenu-principal">
+        <h1>Bienvenue sur Arthro-IMC</h1>
+        <p>
+          Le projet Arthro-IMC étudie l'impact de la **Force Musculaire** et de
+          la **Composition Corporelle** sur le risque d'arthrose du genou,
+          proposant des indicateurs plus précis que l'Indice de Masse Corporelle
+          (IMC) seul.
+        </p>
+
+        <section id="imc-calculator" class="card card-special-calc">
+          <h2>Outil : Calculateur d'IMC Standard</h2>
+          <p>
+            Utilisez cet outil pour calculer rapidement votre IMC et vous situer
+            par rapport aux classifications utilisées dans notre étude.
+          </p>
+
+          <div class="calculator-form">
+            <label for="poids">Poids (kg) :</label>
+            <input
+              type="number"
+              id="poids"
+              placeholder="Ex: 80"
+              min="1"
+              step="0.1"
+            />
+          </div>
+
+          <div class="calculator-form">
+            <label for="taille">Taille (m) :</label>
+            <input
+              type="number"
+              id="taille"
+              placeholder="Ex: 1.75"
+              min="0.5"
+              max="2.5"
+              step="0.01"
+            />
+          </div>
+
+          <button onclick="calculerIMC()" class="btn-calculate">
+            Calculer mon IMC
+          </button>
+
+          <div id="resultat-imc" class="imc-initial">
+            <p>Entrez votre poids et votre taille pour commencer.</p>
+          </div>
+        </section>
+        <section id="introduction" class="card">
+          <h2>1. Introduction au Projet</h2>
+          <p>
+            L'arthrose du genou est une maladie articulaire dégénérative très
+            fréquente, et l'obésité (mesurée par l'IMC) est l'un de ses
+            principaux facteurs de risque.
+          </p>
+          <img
+            src="placeholder_genou_articulation.jpg"
+            alt="Schéma anatomique de l'articulation du genou"
+            class="content-img"
+          />
+          <p>
+            Notre hypothèse est que l'IMC est un indicateur imprécis car il ne
+            fait pas la distinction entre la masse grasse (facteur inflammatoire
+            et mécanique aggravant) et la masse musculaire (LBM, potentiellement
+            protectrice).
+          </p>
+        </section>
+
+        <section id="enjeux" class="card">
+          <h2>2. Enjeux et Objectifs de l'Étude</h2>
+          <p>
+            Le projet Arthro-IMC vise à aller au-delà de l'IMC en corrélant
+            directement les mesures de force musculaire (dynamométrie et EMG) et
+            de composition corporelle avec le risque articulaire. L'objectif
+            final est de développer un modèle numérique (éléments finis) capable
+            de prédire l'usure du cartilage en fonction de ces paramètres réels,
+            plutôt que du seul poids corporel.
+          </p>
+          <img
+            src="placeholder_equipe_recherche.jpg"
+            alt="Photo de l'équipe de recherche sur l'arthrose"
+            class="content-img"
+          />
+        </section>
+
+        <section id="resultats-prevus" class="card">
+          <h2>3. Aperçu des Résultats Clés</h2>
+          <p>
+            Nos résultats préliminaires suggèrent une forte corrélation entre
+            une faible masse musculaire relative et un risque accru de
+            dégradation articulaire, même chez les sujets en surpoids.
+          </p>
+          <img
+            src="placeholder_resultats_preview.jpg"
+            alt="Aperçu des résultats préliminaires montrant la corrélation force musculaire - IMC - risque d'arthrose"
+            class="content-img"
+          />
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

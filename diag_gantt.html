@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagramme de Gantt | Suivi de Projet</title>
+    <link rel="stylesheet" href="style1.css" />
+
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+
+    <script type="text/javascript" src="diag_gantt.js" defer></script>
+  </head>
+  <body>
+    <header class="header-nav">
+      <div class="logo"><a href="index.html">ARTHRO-IMC</a></div>
+      <nav>
+        <ul class="menu-flex">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="arthro-imc_etat_art.html">État de l'Art</a></li>
+          <li><a href="arthro-imc_protocole.html">Protocole</a></li>
+          <li><a href="arthro-imc_resultats.html">Résultats</a></li>
+          <li><a href="arthro-imc_articles.html">Articles</a></li>
+          <li><a href="planification.html">Planification</a></li>
+          <li class="active"><a href="diag_gantt.html">Gantt</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="main-grid">
+      <main class="contenu-principal">
+        <section class="card">
+          <h1>📈 Diagramme de Gantt du Projet</h1>
+          <p>
+            Visualisation de l'avancement du projet. La progression est calculée
+            selon le statut de la tâche (Terminé: 100%, En Cours: 50%, À Faire:
+            0%).
+          </p>
+
+          <div id="gantt_chart_container" style="width: 100%; height: 500px">
+            Chargement du diagramme...
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

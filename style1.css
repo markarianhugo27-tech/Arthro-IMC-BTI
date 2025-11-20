@@ -1,0 +1,1869 @@
+/*
+ * Fichier CSS pour le projet Arthro-IMC
+ * Style basé sur un design simple, académique et moderne (Nuances de Gris/Couleurs Pâles).
+ */
+/* ========================================================= */
+/* SÉCURITÉ : CACHER LE CONTENU DE LA PLANIFICATION PAR DÉFAUT */
+/* ========================================================= */
+
+.main-grid {
+  /* ... vos styles existants ... */
+}
+
+/* Ajout pour cacher la grille au départ */
+#planification-grid {
+  display: none; /* Cache la grille si le script ne l'a pas encore affichée */
+}
+/* 1. Base et Typographie */
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6; /* Gris très clair (Base) */
+  color: #333; /* Texte sombre */
+}
+
+h1,
+h2,
+h3 {
+  color: #1e3a5f; /* Bleu foncé académique (Titres) */
+  font-weight: 700;
+}
+
+a {
+  color: #0077b6; /* Bleu académique (Liens) */
+  text-decoration: none;
+}
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #727373;
+  padding: 15px 40px;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+}
+.logo {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+.menu-flex {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.menu-flex li {
+  margin-left: 20px;
+}
+.menu-flex a:hover {
+  color: #a0c4ff;
+  text-decoration: none;
+}
+.main-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 30px;
+  max-width: 1300px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+.contenu-principal {
+  grid-column: 2 / 3;
+}
+.sidebar-toc {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+  position: sticky;
+  top: 30px;
+}
+.sidebar-toc h3 {
+  margin-top: 0;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+.sidebar-toc ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar-toc li {
+  margin-bottom: 10px;
+}
+.sidebar-toc a {
+  color: #555;
+}
+.card {
+  background-color: white;
+  padding: 30px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.card h2 {
+  color: #8a8a8a;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+/* --- GESTION DES TÂCHES (TO DO LIST) --- */
+
+.card-special-todo {
+  border-left: 5px solid #0077b6;
+  background-color: #f7faff;
+}
+
+.todo-input-group {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.input-tache {
+  grid-column: 1 / 2;
+}
+.input-date {
+  grid-column: 2 / 3;
+}
+.select-tache {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#nouvelle-tache-type {
+  grid-column: 2 / 3;
+}
+#select-responsable-temp {
+  grid-column: 1 / 2;
+}
+#responsables-selectionnes-ajout {
+  grid-column: 1 / 4;
+}
+.btn-add-tache {
+  grid-column: 3 / 4;
+  background-color: #1e3a5f;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  height: 40px;
+  line-height: 20px;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+}
+.btn-add-tache:hover {
+  background-color: #0077b6;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+/* --- NOUVELLES COULEURS DES CADRES (Frame Colors) --- */
+.couleur-Blanc {
+  background-color: white;
+  border-left: 5px solid #e0e0e0; /* Gris clair */
+}
+.couleur-Jaune {
+  background-color: #fffde7; /* Jaune très pâle */
+  border-left: 5px solid #ffeb84; /* Jaune */
+}
+.couleur-Orange {
+  background-color: #fffaf0; /* Orange très pâle */
+  border-left: 5px solid #ff9966; /* Orange */
+}
+.couleur-Vert {
+  background-color: #f0fff0; /* Vert très pâle */
+  border-left: 5px solid #28a745; /* Vert */
+}
+
+.task-info {
+  grid-column: 1 / 2;
+}
+.task-edit-mode {
+  grid-column: 1 / 3;
+}
+
+/* --- Description Fix --- */
+.task-text-container {
+  cursor: pointer;
+  padding: 5px 0;
+}
+.task-text {
+  font-weight: 500;
+}
+.task-description {
+  display: none;
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 5px;
+  padding-left: 10px;
+  border-left: 2px solid #ccc;
+  font-style: italic;
+}
+.task-description.visible {
+  display: block;
+}
+.task-text-container.expanded .task-text {
+  color: #0077b6;
+}
+
+.actions {
+  grid-column: 2 / 3;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.actions-edit {
+  grid-column: 1 / 3;
+  justify-self: start;
+  margin-top: 15px;
+  border-top: 1px dashed #ccc;
+  padding-top: 10px;
+}
+
+/* --- MODE ÉDITION STYLES --- */
+
+.edit-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* FIX PRINCIPAL : Assurer que la ligne est au-dessus et séparée */
+.edit-line-1 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+
+  position: relative;
+  z-index: 10;
+
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.input-modifier-tache {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #0077b6;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+/* Styles des labels */
+.edit-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #1e3a5f;
+}
+
+.edit-field {
+  flex-grow: 1;
+}
+
+.select-tache-edit,
+.input-tache-edit {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+/* Boutons de Statut (Avancement) */
+.btn-statut {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Couleurs des boutons de STATUT */
+.btn-non-commence {
+  background-color: #ff9999;
+  color: #333;
+}
+.btn-en-cours {
+  background-color: #fff0b3;
+  color: #333;
+}
+.btn-termine {
+  background-color: #99ff99;
+  color: #333;
+}
+
+/* Statut Actif (pour le mode édition) */
+.btn-statut.active {
+  border-color: #1e3a5f;
+  box-shadow: 0 0 5px rgba(0, 119, 182, 0.5);
+  font-weight: 700;
+}
+
+/* --- Boutons de Couleur (Couleur du Cadre) --- */
+.btn-couleur {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-couleur-Blanc {
+  background-color: #f0f0f0;
+  color: #333;
+}
+.btn-couleur-Jaune {
+  background-color: #fffde7;
+  color: #333;
+}
+.btn-couleur-Orange {
+  background-color: #fffaf0;
+  color: #333;
+}
+.btn-couleur-Vert {
+  background-color: #f0fff0;
+  color: #333;
+}
+
+.btn-couleur.active {
+  border-color: #1e3a5f;
+  box-shadow: 0 0 5px rgba(0, 119, 182, 0.5);
+  font-weight: 700;
+}
+
+/* --- AFFICHAGE DU STATUT ET RESPONSABLES EN MODE LECTURE --- */
+
+/* Style de base des tags en mode lecture */
+.task-status-display,
+.responsable-tag {
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* 🛑 STATUTS : COULEURS PLEINES DEMANDÉES 🛑 */
+.task-status-display {
+  color: rgb(0, 0, 0);
+  /* Bordure pour la distinction */
+  border: 1px solid transparent;
+}
+
+.status-Noncommence {
+  background-color: #ff8c00; /* Orange Soutenu (Moyen) */
+  border-color: #e07b00;
+  color: #333;
+}
+.status-Encours {
+  background-color: #ffc107; /* Jaune soutenu */
+  border-color: #e0ac00;
+  color: #333;
+}
+.status-Termine {
+  background-color: #28a745; /* Vert Période */
+  border-color: #1e8437;
+  color: #333;
+}
+
+/* 👥 RESPONSABLES (Prénoms) : COULEUR ET CADRE DEMANDÉS 👥 */
+.responsable-tag {
+  background-color: #728c9e; /* Gris-Bleu Médium */
+  color: white;
+  border-color: #60798a; /* Bordure un peu plus foncée */
+  font-weight: 500;
+}
+
+/* --- AUTRES TAGS --- */
+.task-metadata {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.type-tag,
+.date-tag {
+  font-size: 0.8em;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  color: white;
+}
+.type-tag {
+  background-color: #6c757d;
+}
+.tag-DateLimite {
+  background-color: #0077b6;
+}
+.tag-RDV {
+  background-color: #ff9900;
+}
+.tag-Autre {
+  background-color: #1e3a5f;
+}
+.date-tag {
+  background-color: #e9ecef;
+  color: #495057;
+  font-weight: 500;
+}
+
+/* --- GESTION DES RESPONSABLES (TAGS BOUTONS - Reste inchangé) --- */
+.responsable-tag-container,
+.responsable-tag-container-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  align-items: center;
+}
+.instruction-selection {
+  font-style: italic;
+  color: #999;
+}
+.tag-responsable-bouton {
+  display: inline-flex;
+  align-items: center;
+  background-color: #1e3a5f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.tag-responsable-bouton:hover {
+  background-color: #0077b6;
+}
+.remove-resp {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 1.1em;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Boutons d'action */
+.btn-action-save {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-action-cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-action-edit,
+.btn-action-delete {
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 4px;
+  padding: 8px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Réactivité */
+@media (max-width: 800px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  .contenu-principal {
+    grid-column: 1 / 2;
+  }
+  .todo-input-group {
+    grid-template-columns: 1fr;
+  }
+  .input-tache,
+  .input-date,
+  #nouvelle-tache-type,
+  #select-responsable-temp,
+  .btn-add-tache {
+    grid-column: 1 / 2;
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+  #responsables-selectionnes-ajout {
+    grid-column: 1 / 2;
+  }
+  .todo-item {
+    grid-template-columns: 1fr;
+  }
+  .actions {
+    justify-self: start;
+    margin-top: 10px;
+  }
+  .task-edit-mode {
+    grid-column: 1 / 2;
+  }
+  .actions-edit {
+    grid-column: 1 / 2;
+  }
+  .edit-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .edit-field {
+    width: 100%;
+  }
+}
+/* ========================================================= */
+/* 4. STYLES SPÉCIFIQUES À LA PAGE PLANIFICATION (MONDAY-LIKE) */
+/* ========================================================= */
+
+#planification-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* Lignes (Header et Tâches) */
+.monday-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr 1fr; /* 5 colonnes */
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* En-tête des colonnes */
+.header-row {
+  background-color: #f7f7f7;
+  font-weight: 700;
+  font-size: 0.9em;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* Ligne de tâche */
+.task-row {
+  background-color: white;
+  transition: background-color 0.2s;
+}
+.task-row:hover {
+  background-color: #f9f9ff;
+}
+
+/* En-tête de Groupe (Sections) */
+.group-header {
+  padding: 8px 15px;
+  color: white;
+  font-size: 1em;
+  font-weight: 700;
+}
+.group-header h3 {
+  margin: 0;
+  font-size: 1em;
+  color: inherit;
+}
+.group-header-blue {
+  background-color: #0077b6; /* Bleu académique */
+}
+.group-header-orange {
+  background-color: #ff9900; /* Orange vif */
+}
+
+/* Contenu des colonnes */
+.column-title {
+  padding: 5px 0;
+}
+.task-name {
+  font-weight: 500;
+  color: #1e3a5f;
+}
+
+/* Tags de Statut (Similaires aux boutons Monday.com) */
+.status,
+.priorite {
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px; /* Pill shape */
+  margin: 0 auto;
+  width: fit-content;
+}
+
+/* Couleurs des tags de Statut */
+.status-todo {
+  background-color: #e0e6ff;
+  color: #1e3a5f;
+}
+.status-inprogress {
+  background-color: #fff0b3;
+  color: #ff9900;
+}
+.status-done {
+  background-color: #d1f7d3;
+  color: #28a745;
+}
+.status-blocked {
+  background-color: #ffcccc;
+  color: #dc3545;
+}
+
+/* Couleurs des tags de Priorité */
+.priorite-basse {
+  background-color: #f0f0f0;
+  color: #6c757d;
+}
+.priorite-moyenne {
+  background-color: #fff0b3;
+  color: #ffc107;
+}
+.priorite-haute {
+  background-color: #ffcccc;
+  color: #dc3545;
+}
+
+/* Tags Responsable */
+.assigne,
+.date-echeance {
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
+}
+.assigne-multi {
+  font-style: italic;
+  font-size: 0.85em;
+}
+
+/* ========================================================= */
+/* 5. STYLES SPÉCIFIQUES À LA GRILLE ÉDITABLE */
+/* ========================================================= */
+
+/* Styles pour les champs éditables/input */
+[contenteditable="true"] {
+  cursor: text;
+  border-radius: 4px;
+  padding: 2px 5px;
+  outline: none; /* Cache l'outline standard au focus */
+  border: 1px solid transparent;
+  transition: border-color 0.2s, background-color 0.2s;
+  min-height: 20px; /* Assure une hauteur minimale */
+  line-height: 20px;
+}
+
+[contenteditable="true"]:hover {
+  background-color: #f0f4f7;
+}
+
+[contenteditable="true"]:focus {
+  border-color: #0077b6; /* Bordure bleue au focus */
+  background-color: white;
+  box-shadow: 0 0 0 1px #0077b6;
+}
+
+/* Style de la ligne d'input de nouveau groupe */
+.group-header-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: #f0f0f0 !important; /* Couleur de fond neutre pour l'input */
+  padding: 10px 15px;
+  border-top: 1px solid #ccc;
+  border-bottom: none;
+}
+.group-header-input h3 {
+  display: none; /* Cache le h3 s'il est là */
+}
+
+.input-group-name {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  outline: none;
+}
+
+.btn-add-group {
+  background-color: #1e3a5f;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.btn-add-group:hover {
+  background-color: #0077b6;
+}
+
+/* Nouvelles couleurs pour les tags de groupe (si besoin dans le JS) */
+.group-header-green {
+  background-color: #28a745;
+}
+.group-header-purple {
+  background-color: #7b4f9d;
+}
+.group-header-red {
+  background-color: #dc3545;
+}
+
+/* Rendre les tags Statut/Priorité cliquables */
+.status,
+.priorite {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.status:hover,
+.priorite:hover {
+  opacity: 0.8;
+}
+/* ========================================================= */
+/* 6. STYLES POPUP SÉLECTION RESPONSABLE & DATE */
+/* ========================================================= */
+
+.clickable-field {
+  cursor: pointer;
+  min-height: 20px;
+}
+.clickable-field.placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Conteneur du tag responsable en mode lecture (Remplaçant le texte simple) */
+.responsable-tag-planif {
+  display: inline-flex;
+  align-items: center;
+  background-color: #a0c4ff; /* Bleu plus léger pour les tags internes */
+  color: #1e3a5f;
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 0.75em;
+  font-weight: 500;
+  margin: 2px;
+  white-space: nowrap;
+}
+
+.remove-resp-planif {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  line-height: 1;
+  color: #1e3a5f;
+  opacity: 0.7;
+}
+.remove-resp-planif:hover {
+  opacity: 1;
+}
+
+/* Style de la popup flottante */
+.planning-popup {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+  min-width: 250px;
+  padding: 10px;
+}
+
+/*
+ * Fichier CSS pour le projet Arthro-IMC
+ * Style basé sur un design simple, académique et moderne.
+ * Inclut les styles généraux, les styles de la To-Do List, et les styles de la Planification Monday-like.
+ */
+
+/* ========================================================= */
+/* 1. BASE ET TYPOGRAPHIE */
+/* ========================================================= */
+
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6; /* Gris très clair (Base) */
+  color: #333; /* Texte sombre */
+}
+
+h1,
+h2,
+h3 {
+  color: #1e3a5f; /* Bleu foncé académique (Titres) */
+  font-weight: 700;
+}
+
+a {
+  color: #0077b6; /* Bleu académique (Liens) */
+  text-decoration: none;
+}
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #727373;
+  padding: 15px 40px;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+}
+.logo {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+.menu-flex {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.menu-flex li {
+  margin-left: 20px;
+}
+.menu-flex a:hover {
+  color: #a0c4ff;
+  text-decoration: none;
+}
+.main-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 30px;
+  max-width: 1300px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+.contenu-principal {
+  grid-column: 2 / 3;
+}
+.sidebar-toc {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+  position: sticky;
+  top: 30px;
+}
+.sidebar-toc h3 {
+  margin-top: 0;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+.sidebar-toc ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar-toc li {
+  margin-bottom: 10px;
+}
+.sidebar-toc a {
+  color: #555;
+}
+.card {
+  background-color: white;
+  padding: 30px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.card h2 {
+  color: #8a8a8a;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+/* ========================================================= */
+/* 2. GESTION DES TÂCHES (TO DO LIST) */
+/* ========================================================= */
+
+.card-special-todo {
+  border-left: 5px solid #0077b6;
+  background-color: #f7faff;
+}
+
+.todo-input-group {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.input-tache {
+  grid-column: 1 / 2;
+}
+.input-date {
+  grid-column: 2 / 3;
+}
+.select-tache {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#nouvelle-tache-type {
+  grid-column: 2 / 3;
+}
+#select-responsable-temp {
+  grid-column: 1 / 2;
+}
+#responsables-selectionnes-ajout {
+  grid-column: 1 / 4;
+}
+.btn-add-tache {
+  grid-column: 3 / 4;
+  background-color: #1e3a5f;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  height: 40px;
+  line-height: 20px;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+}
+.btn-add-tache:hover {
+  background-color: #0077b6;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+/* --- Cadres latéraux des tâches To-Do --- */
+.couleur-Blanc {
+  background-color: white;
+  border-left: 5px solid #e0e0e0;
+}
+.couleur-Jaune {
+  background-color: #fffde7;
+  border-left: 5px solid #ffeb84;
+}
+.couleur-Orange {
+  background-color: #fffaf0;
+  border-left: 5px solid #ff9966;
+}
+.couleur-Vert {
+  background-color: #f0fff0;
+  border-left: 5px solid #28a745;
+}
+
+.task-info {
+  grid-column: 1 / 2;
+}
+.task-edit-mode {
+  grid-column: 1 / 3;
+}
+
+/* --- Description --- */
+.task-text-container {
+  cursor: pointer;
+  padding: 5px 0;
+}
+.task-text {
+  font-weight: 500;
+}
+.task-description {
+  display: none;
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 5px;
+  padding-left: 10px;
+  border-left: 2px solid #ccc;
+  font-style: italic;
+}
+.task-description.visible {
+  display: block;
+}
+.task-text-container.expanded .task-text {
+  color: #0077b6;
+}
+
+.actions {
+  grid-column: 2 / 3;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.actions-edit {
+  grid-column: 1 / 3;
+  justify-self: start;
+  margin-top: 15px;
+  border-top: 1px dashed #ccc;
+  padding-top: 10px;
+}
+
+/* --- MODE ÉDITION STYLES --- */
+
+.edit-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.edit-line-1 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+
+  position: relative;
+  z-index: 10;
+
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.input-modifier-tache {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #0077b6;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+/* Styles des labels */
+.edit-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #1e3a5f;
+}
+
+.edit-field {
+  flex-grow: 1;
+}
+
+.select-tache-edit,
+.input-tache-edit {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+/* Boutons de Statut (Avancement) */
+.btn-statut {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Couleurs des boutons de STATUT */
+.btn-non-commence {
+  background-color: #ff9999;
+  color: #333;
+}
+.btn-en-cours {
+  background-color: #fff0b3;
+  color: #333;
+}
+.btn-termine {
+  background-color: #99ff99;
+  color: #333;
+}
+
+/* Statut Actif (pour le mode édition) */
+.btn-statut.active {
+  border-color: #1e3a5f;
+  box-shadow: 0 0 5px rgba(0, 119, 182, 0.5);
+  font-weight: 700;
+}
+
+/* --- Boutons de Couleur (Couleur du Cadre) --- */
+.btn-couleur {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-couleur-Blanc {
+  background-color: #f0f0f0;
+  color: #333;
+}
+.btn-couleur-Jaune {
+  background-color: #fffde7;
+  color: #333;
+}
+.btn-couleur-Orange {
+  background-color: #fffaf0;
+  color: #333;
+}
+.btn-couleur-Vert {
+  background-color: #f0fff0;
+  color: #333;
+}
+
+.btn-couleur.active {
+  border-color: #1e3a5f;
+  box-shadow: 0 0 5px rgba(0, 119, 182, 0.5);
+  font-weight: 700;
+}
+
+/* --- AFFICHAGE DU STATUT ET RESPONSABLES EN MODE LECTURE (TO-DO) --- */
+
+/* Style de base des tags en mode lecture */
+.task-status-display,
+.responsable-tag {
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* 🛑 STATUTS : COULEURS PLEINES ET CADRES ENFORCÉS (FIX) 🛑 */
+.task-status-display {
+  color: white;
+}
+
+.status-Noncommence {
+  background-color: #ff8c00;
+  border: 1px solid #e07b00;
+  color: white;
+}
+.status-Encours {
+  background-color: #ffc107;
+  border: 1px solid #e0ac00;
+  color: #333;
+}
+.status-Termine {
+  background-color: #28a745;
+  border: 1px solid #1e8437;
+  color: white;
+}
+
+/* 👥 RESPONSABLES (Prénoms) : COULEUR ET CADRE DEMANDÉS (FIX) 👥 */
+.responsable-tag {
+  background-color: #728c9e;
+  color: white;
+  border: 1px solid #60798a;
+  font-weight: 500;
+}
+
+/* --- AUTRES TAGS TO-DO --- */
+.task-metadata {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.type-tag,
+.date-tag {
+  font-size: 0.8em;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  color: white;
+}
+.type-tag {
+  background-color: #6c757d;
+}
+.tag-DateLimite {
+  background-color: #0077b6;
+}
+.tag-RDV {
+  background-color: #ff9900;
+}
+.tag-Autre {
+  background-color: #1e3a5f;
+}
+.date-tag {
+  background-color: #e9ecef;
+  color: #495057;
+  font-weight: 500;
+}
+
+/* --- GESTION DES RESPONSABLES (TAGS BOUTONS) --- */
+.responsable-tag-container,
+.responsable-tag-container-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  align-items: center;
+}
+.instruction-selection {
+  font-style: italic;
+  color: #999;
+}
+.tag-responsable-bouton {
+  display: inline-flex;
+  align-items: center;
+  background-color: #1e3a5f;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.tag-responsable-bouton:hover {
+  background-color: #0077b6;
+}
+.remove-resp {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 1.1em;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Boutons d'action */
+.btn-action-save {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-action-cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-action-edit,
+.btn-action-delete {
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 4px;
+  padding: 8px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================================================= */
+/* 3. STYLES SPÉCIFIQUES À LA PAGE PLANIFICATION (MONDAY-LIKE) */
+/* ========================================================= */
+
+#planification-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* Lignes (Header et Tâches) */
+.monday-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr 1fr; /* 5 colonnes */
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* En-tête des colonnes */
+.header-row {
+  background-color: #f7f7f7;
+  font-weight: 700;
+  font-size: 0.9em;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* Ligne de tâche */
+.task-row {
+  background-color: white;
+  transition: background-color 0.2s;
+}
+.task-row:hover {
+  background-color: #f9f9ff;
+}
+
+/* En-tête de Groupe (Sections) */
+.group-header {
+  padding: 8px 15px;
+  color: white;
+  font-size: 1em;
+  font-weight: 700;
+}
+.group-header h3 {
+  margin: 0;
+  font-size: 1em;
+  color: inherit;
+}
+.group-header-blue {
+  background-color: #0077b6; /* Bleu académique */
+}
+.group-header-orange {
+  background-color: #ff9900; /* Orange vif */
+}
+.group-header-green {
+  background-color: #28a745;
+}
+.group-header-purple {
+  background-color: #7b4f9d;
+}
+.group-header-red {
+  background-color: #dc3545;
+}
+
+/* Contenu des colonnes */
+.column-title {
+  padding: 5px 0;
+}
+.task-name {
+  font-weight: 500;
+  color: #1e3a5f;
+}
+
+/* Tags de Statut (Similaires aux boutons Monday.com) */
+.status,
+.priorite {
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 20px; /* Pill shape */
+  margin: 0 auto;
+  width: fit-content;
+  cursor: pointer; /* Rendre cliquable */
+  transition: opacity 0.2s;
+}
+.status:hover,
+.priorite:hover {
+  opacity: 0.8;
+}
+
+/* Couleurs des tags de Statut */
+.status-todo {
+  background-color: #e0e6ff;
+  color: #1e3a5f;
+}
+.status-inprogress {
+  background-color: #fff0b3;
+  color: #ff9900;
+}
+.status-done {
+  background-color: #d1f7d3;
+  color: #28a745;
+}
+.status-blocked {
+  background-color: #ffcccc;
+  color: #dc3545;
+}
+
+/* Couleurs des tags de Priorité */
+.priorite-basse {
+  background-color: #f0f0f0;
+  color: #6c757d;
+}
+.priorite-moyenne {
+  background-color: #fff0b3;
+  color: #ffc107;
+}
+.priorite-haute {
+  background-color: #ffcccc;
+  color: #dc3545;
+}
+
+/* ========================================================= */
+/* 4. STYLES SPÉCIFIQUES À LA GRILLE ÉDITABLE */
+/* ========================================================= */
+
+/* Styles pour les champs éditables/input */
+[contenteditable="true"] {
+  cursor: text;
+  border-radius: 4px;
+  padding: 2px 5px;
+  outline: none;
+  border: 1px solid transparent;
+  transition: border-color 0.2s, background-color 0.2s;
+  min-height: 20px;
+  line-height: 20px;
+}
+
+[contenteditable="true"]:hover {
+  background-color: #f0f4f7;
+}
+
+[contenteditable="true"]:focus {
+  border-color: #0077b6;
+  background-color: white;
+  box-shadow: 0 0 0 1px #0077b6;
+}
+
+/* Style de la ligne d'input de nouveau groupe */
+.group-header-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: #f0f0f0 !important;
+  padding: 10px 15px;
+  border-top: 1px solid #ccc;
+  border-bottom: none;
+}
+.group-header-input h3 {
+  display: none;
+}
+
+.input-group-name {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  outline: none;
+}
+
+.btn-add-group {
+  background-color: #1e3a5f;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.btn-add-group:hover {
+  background-color: #0077b6;
+}
+
+/* ========================================================= */
+/* 5. STYLES POPUP SÉLECTION RESPONSABLE & DATE */
+/* ========================================================= */
+
+.clickable-field {
+  cursor: pointer;
+  min-height: 20px;
+}
+.clickable-field.placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Conteneur du tag responsable en mode lecture (Planification) */
+.responsable-tag-planif {
+  display: inline-flex;
+  align-items: center;
+  background-color: #a0c4ff;
+  color: #1e3a5f;
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 0.75em;
+  font-weight: 500;
+  margin: 2px;
+  white-space: nowrap;
+}
+
+.remove-resp-planif {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  line-height: 1;
+  color: #1e3a5f;
+  opacity: 0.7;
+}
+.remove-resp-planif:hover {
+  opacity: 1;
+}
+
+/* Style de la popup flottante */
+.planning-popup {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+  min-width: 280px; /* Élargi pour le bouton supprimer */
+  padding: 10px;
+}
+
+/* Style spécifique au sélecteur de responsable */
+.responsable-selector {
+  display: flex;
+  flex-direction: column;
+}
+
+.resp-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+/* Ligne complète dans le sélecteur */
+.resp-option-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.resp-option {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  padding-left: 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  flex-grow: 1;
+}
+
+.resp-option-line:hover {
+  background-color: #f0f4f7;
+}
+
+.resp-option input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.btn-delete-resp {
+  background: none;
+  border: 1px solid #ddd;
+  color: #dc3545;
+  padding: 2px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.7em;
+  transition: background-color 0.2s;
+}
+
+.btn-delete-resp:hover {
+  background-color: #ffcccc;
+  border-color: #dc3545;
+}
+
+.resp-add {
+  display: flex;
+  gap: 5px;
+}
+
+.input-new-resp {
+  flex-grow: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-add-resp {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style spécifique au sélecteur de date */
+.date-picker {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.input-date-select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.btn-clear-date {
+  background-color: #f4f4f4;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ========================================================= */
+/* 6. RÉACTIVITÉ */
+/* ========================================================= */
+@media (max-width: 800px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  .contenu-principal {
+    grid-column: 1 / 2;
+  }
+  .todo-input-group {
+    grid-template-columns: 1fr;
+  }
+  .input-tache,
+  .input-date,
+  #nouvelle-tache-type,
+  #select-responsable-temp,
+  .btn-add-tache {
+    grid-column: 1 / 2;
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+  #responsables-selectionnes-ajout {
+    grid-column: 1 / 2;
+  }
+  .todo-item {
+    grid-template-columns: 1fr;
+  }
+  .actions {
+    justify-self: start;
+    margin-top: 10px;
+  }
+  .task-edit-mode {
+    grid-column: 1 / 2;
+  }
+  .actions-edit {
+    grid-column: 1 / 2;
+  }
+  .edit-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .edit-field {
+    width: 100%;
+  }
+
+  /* Réactivité de la grille de planification */
+  .monday-row {
+    grid-template-columns: 2fr repeat(4, 1fr); /* Ajustement pour petits écrans */
+    font-size: 0.9em;
+  }
+  .header-row {
+    display: none; /* Cache l'en-tête sur mobile pour gagner de la place */
+  }
+  .group-header {
+    font-size: 0.9em;
+  }
+}
+/* ========================================================= */
+/* 7. STYLES GLISSER-DÉPOSER, DESCRIPTION ET ÉDITION DE GROUPE */
+/* ========================================================= */
+
+/* Conteneur de groupe pour le drag-and-drop */
+.group-container {
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Tâche en cours de déplacement */
+.task-row.dragging,
+.group-container.dragging {
+  opacity: 0.2;
+}
+
+/* Placeholder pour l'insertion (Drag and drop) */
+.drag-placeholder {
+  height: 3px;
+  background-color: #0077b6; /* Ligne bleue d'insertion */
+  margin: 5px 0;
+}
+
+/* Icône de Description sur la tâche */
+.task-row.monday-row {
+  position: relative;
+}
+
+.task-description-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #b0b0b0;
+  transition: color 0.2s;
+}
+
+.task-description-icon:hover {
+  color: #0077b6;
+}
+
+.task-description-icon.has-description {
+  color: #ff9900; /* Icône orange si la description existe */
+}
+
+/* --- Éditeur de Groupe --- */
+.group-editor {
+  width: 350px;
+  padding: 15px;
+}
+
+.group-editor h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #1e3a5f;
+}
+
+.input-group-name-edit {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.color-picker-container {
+  margin-bottom: 15px;
+}
+
+.color-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.btn-color-select {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Couleurs des boutons de sélection de groupe */
+.group-color-blue {
+  background-color: #0077b6;
+}
+.group-color-orange {
+  background-color: #ff9900;
+}
+.group-color-green {
+  background-color: #28a745;
+}
+.group-color-purple {
+  background-color: #7b4f9d;
+}
+.group-color-red {
+  background-color: #dc3545;
+}
+
+.btn-save-group,
+.btn-delete-group {
+  width: calc(50% - 5px);
+  margin-top: 10px;
+}
+
+/* --- Éditeur de Description --- */
+.description-editor {
+  width: 400px;
+  padding: 15px;
+}
+
+.input-description-edit {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.btn-save-desc {
+  width: 100%;
+}
+/* --- Correction du Surlignage (Focus/Outline) des Cellules Dynamiques --- */
+
+/* Empêche le cadre de focus bleu/noir sur les éléments cliquables */
+.status:focus,
+.priorite:focus,
+.assigne:focus,
+.date-echeance:focus,
+.task-name:focus {
+  outline: none !important;
+  border-color: transparent !important;
+}
+
+/* S'assure que les cellules de statut et priorité ne reçoivent pas de bordure lors du changement */
+.status,
+.priorite {
+  user-select: none; /* Empêche la sélection de texte */
+  cursor: pointer;
+}
