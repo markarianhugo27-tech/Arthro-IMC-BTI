@@ -7,7 +7,7 @@
 // SÉCURITÉ : VÉRIFICATION DU CODE D'ACCÈS
 // =========================================================
 
-const ACCESS_CODE = "BTI"; // <<<--- VOTRE CODE D'ACCÈS
+const ACCESS_CODE = "BTI";
 
 function checkAccessCode() {
   if (sessionStorage.getItem("planificationAccess") === "granted") {
@@ -52,6 +52,7 @@ let dragOverPlaceholder = null;
 let handleGroupDragStart;
 let handleTaskDragStart;
 let handleDescriptionClick;
+
 // =========================================================
 // 1. UTILS & GESTION FIREBASE (SAUVEGARDE ET CHARGEMENT)
 // =========================================================
@@ -82,6 +83,13 @@ function collectData() {
       container.querySelectorAll(".task-row").forEach((row) => {
         const assigneCell = row.querySelector(".assigne");
 
+        // Rendre la lecture de l'attribut Responsables plus robuste
+        let responsablesAttr = assigneCell.getAttribute("data-responsables");
+
+        if (!responsablesAttr || responsablesAttr === "undefined") {
+          responsablesAttr = "[]";
+        }
+
         tasks.push({
           id: row.getAttribute("data-id"),
           name: row.querySelector(".task-name").textContent,
@@ -89,18 +97,19 @@ function collectData() {
           priorite: row
             .querySelector(".priorite")
             .getAttribute("data-priorite"),
-          responsables: JSON.parse(
-            assigneCell.getAttribute("data-responsables") || "[]"
-          ),
+          responsables: JSON.parse(responsablesAttr),
           date: row.querySelector(".date-echeance").getAttribute("data-date"),
           description: row.getAttribute("data-description") || "",
         });
       });
 
+      // Assurer que les tâches sont un tableau dans le modèle
+      let tasksArray = groups.tasks || [];
+
       groups.push({
         name: container.getAttribute("data-name"),
         color: container.getAttribute("data-color"),
-        tasks: tasks,
+        tasks: tasks, // C'est 'tasks' qui est le tableau des tâches
       });
     });
 
@@ -133,14 +142,28 @@ function initializeEmptyGrid() {
 
   // Crée le groupe par défaut pour éviter que la grille ne soit vide
   const defaultGroupName = "Étape 1: Initialisation & Analyse";
-  // NOTE: createNewGroupContainer DOIT EXISTER DANS VOTRE CODE
   const group1 = createNewGroupContainer(defaultGroupName, "blue");
   planificationGrid.appendChild(group1);
 
   saveData();
 }
 
-// DANS planification.js (À ajouter AVANT startRealtimeSync)
+/**
+ * Construit et ajoute la ligne d'en-tête de colonne.
+ */
+function appendHeaderRow() {
+  const headerRow = document.createElement("div");
+  headerRow.className = "header-row monday-row";
+  headerRow.innerHTML = `
+        <div class="column-title task-name">Nom de la Tâche</div>
+        <div class="column-title status">Statut</div>
+        <div class="column-title assigne">Responsable</div>
+        <div class="column-title date-echeance">Échéance</div>
+        <div class="column-title priorite">Priorité</div>
+        <div class="column-title" style="width: 30px"></div>
+    `;
+  planificationGrid.prepend(headerRow); // Utiliser prepend pour s'assurer qu'il est en haut
+}
 
 function createNewGroupContainer(name, color) {
   const newGroupContainer = document.createElement("div");
@@ -156,10 +179,8 @@ function createNewGroupContainer(name, color) {
             </div>
     `;
 
-  // Le setupGroupEditing est appelé plus tard dans startRealtimeSync
   return newGroupContainer;
 }
-// DANS planification.js (À ajouter AVANT startRealtimeSync)
 
 function createNewTaskRow(taskData, taskList) {
   const row = document.createElement("div");
@@ -190,10 +211,10 @@ function createNewTaskRow(taskData, taskList) {
     `;
 
   // Rendu dynamique (IMPORTANT)
-  // Ces fonctions DOIVENT exister dans votre code
   const assigneCell = row.querySelector(".assigne");
   const dateCell = row.querySelector(".date-echeance");
 
+  // Ces fonctions DOIVENT exister dans votre code (elles sont définies plus loin)
   if (typeof renderResponsables !== "undefined") {
     renderResponsables(assigneCell, taskData.responsables);
   }
@@ -207,11 +228,12 @@ function createNewTaskRow(taskData, taskList) {
   return row;
 }
 
-// DANS planification.js (À ajouter après initializeEmptyGrid())
+// =========================================================
+// 3. SYNCHRONISATION EN TEMPS RÉEL (VERSION FINALE)
+// =========================================================
 
 /**
  * [FIREBASE] Lance l'écoute en temps réel pour charger et synchroniser les données.
- * Cette fonction remplace l'ancienne loadData() et gère toute la reconstruction.
  */
 function startRealtimeSync() {
   // 'on' écoute et se déclenche après la réception des données
@@ -223,25 +245,35 @@ function startRealtimeSync() {
       // 1. Vider la grille pour la reconstruire
       planificationGrid.innerHTML = "";
 
-      if (data && data.length > 0) {
+      // *** CORRECTION 1: Ajout de l'en-tête de colonne ***
+      appendHeaderRow();
+
+      // Assurez-vous que data est un tableau pour l'itération des groupes
+      const groupsData = data || [];
+
+      if (groupsData && groupsData.length > 0) {
         console.log("Données reçues de Firebase (Temps Réel).");
 
         // 2. BOUCLE DE RECONSTRUCTION DEPUIS FIREBASE
-        data.forEach((groupData) => {
-          // NOTE: createNewGroupContainer DOIT EXISTER DANS VOTRE CODE
+        groupsData.forEach((groupData) => {
+          // Si groupData n'est pas valide, on passe au suivant (sécurité supplémentaire)
+          if (!groupData || !groupData.name || !groupData.color) return;
+
           const groupContainer = createNewGroupContainer(
             groupData.name,
             groupData.color
           );
           planificationGrid.appendChild(groupContainer);
 
-          groupData.tasks.forEach((taskData) => {
-            // NOTE: createNewTaskRow DOIT EXISTER DANS VOTRE CODE
+          // CORRECTION CRITIQUE : Utiliser || [] pour garantir un tableau de tâches
+          const tasksList = groupData.tasks || [];
+
+          tasksList.forEach((taskData) => {
             const taskRow = createNewTaskRow(
               taskData,
               groupContainer.querySelector(".task-list")
             );
-            setupTaskInteractivity(taskRow); // Rattache les événements de tâche
+            setupTaskInteractivity(taskRow); // Rattache les événements de t^ache
           });
         });
       } else {
@@ -255,11 +287,11 @@ function startRealtimeSync() {
       planificationGrid
         .querySelectorAll(".group-container")
         .forEach((container) => {
-          // NOTE: setupGroupEditing DOIT EXISTER DANS VOTRE CODE
-          setupGroupEditing(
-            container.querySelector(".group-header"),
-            container
-          );
+          // On s'assure que le header existe avant d'appeler setupGroupEditing
+          const header = container.querySelector(".group-header");
+          if (header) {
+            setupGroupEditing(header, container);
+          }
 
           // On s'assure que toutes les tâches ont bien leurs événements
           container.querySelectorAll(".task-row").forEach((row) => {
@@ -268,8 +300,8 @@ function startRealtimeSync() {
         });
 
       // 4. Finalisation : Ajout des lignes d'entrée et Drag & Drop
-      appendNewTaskAndGroupInputRows(); // NOTE: appendNewTaskAndGroupInputRows DOIT EXISTER
-      setupDragAndDrop(); // NOTE: setupDragAndDrop DOIT EXISTER
+      appendNewTaskAndGroupInputRows();
+      setupDragAndDrop();
     },
     (error) => {
       console.error("Erreur de lecture Firebase:", error);
@@ -280,13 +312,12 @@ function startRealtimeSync() {
   );
 }
 
-// <<< Toutes vos autres fonctions utilitaires (comme updateGroupDisplay, setupGroupEditing, etc.) suivent ici >>>
-
 function updateGroupDisplay(container) {
   const name = container.getAttribute("data-name");
   const color = container.getAttribute("data-color");
   const header = container.querySelector(".group-header");
 
+  // *** CORRECTION 2: S'assurer que le header met à jour son nom de classe ***
   header.className = `group-header group-header-${color}`;
   header.innerHTML = `<h3>${name}</h3>`;
 
@@ -361,6 +392,10 @@ function openGroupEditPopup(header, container) {
       const newColor = e.currentTarget.getAttribute("data-color");
       container.setAttribute("data-color", newColor);
 
+      // Met à jour visuellement le header du groupe pendant l'édition
+      const groupHeader = container.querySelector(".group-header");
+      groupHeader.className = `group-header group-header-${newColor}`;
+
       popup
         .querySelectorAll(".btn-color-select")
         .forEach((b) => (b.style.borderColor = "transparent"));
@@ -371,7 +406,7 @@ function openGroupEditPopup(header, container) {
   popup.querySelector(".btn-save-group").addEventListener("click", () => {
     const newName = popup.querySelector(".input-group-name-edit").value.trim();
     container.setAttribute("data-name", newName);
-    updateGroupDisplay(container);
+    updateGroupDisplay(container); // Ceci sauvegarde et met à jour
     closeAllPopups();
   });
 
@@ -421,6 +456,7 @@ function createGroupInputRow() {
                     <div class="group-header group-header-${colorName}">
                         <h3>${newGroupName}</h3>
                     </div>
+                    <div class="task-list"></div>
                 `;
 
       planificationGrid.insertBefore(newGroupContainer, inputRow);
@@ -450,7 +486,8 @@ function createGroupInputRow() {
 // 2. GESTION DES TACHES & AJOUT
 // =========================================================
 
-function createNewTaskRow() {
+// Note: Cette fonction crée une nouvelle tâche AVEC la valeur par défaut pour l'input row
+function createNewTaskRowDefault() {
   taskIdCounter++;
   const row = document.createElement("div");
   row.className = "task-row monday-row";
@@ -478,6 +515,8 @@ function createNewTaskRow() {
 
   return row;
 }
+// Correction du nom de la fonction pour éviter la confusion avec createNewTaskRow(taskData, taskList)
+const createNewTaskRowForInput = createNewTaskRowDefault;
 
 function createNewTaskInputRow() {
   const inputRow = document.createElement("div");
@@ -491,7 +530,7 @@ function createNewTaskInputRow() {
         `;
 
   inputRow.querySelector("#btn-add-new-task").addEventListener("click", () => {
-    const newTask = createNewTaskRow();
+    const newTask = createNewTaskRowForInput();
 
     // Logique corrigée pour trouver le dernier groupe, même si nouvellement créé
     const groupContainers =
@@ -499,8 +538,16 @@ function createNewTaskInputRow() {
     const lastGroup = groupContainers[groupContainers.length - 1];
 
     if (lastGroup) {
-      lastGroup.appendChild(newTask);
+      // Le task-list est à l'intérieur du group-container
+      let taskList = lastGroup.querySelector(".task-list");
+      if (!taskList) {
+        taskList = document.createElement("div");
+        taskList.classList.add("task-list");
+        lastGroup.appendChild(taskList);
+      }
+      taskList.appendChild(newTask);
     } else {
+      // Logique fallback si aucun groupe n'existe (devrait être initialisé par initializeEmptyGrid)
       const inputTaskRow = planificationGrid.querySelector(".task-input-row");
       if (inputTaskRow) {
         planificationGrid.insertBefore(newTask, inputTaskRow);
@@ -527,12 +574,21 @@ function appendNewTaskAndGroupInputRows() {
 // =========================================================
 // 3. GESTION DES CHAMPS DYNAMIQUES
 // =========================================================
-
 function setupEditableCells(row) {
-  row.querySelectorAll(".task-name").forEach((cell) => {
-    cell.addEventListener("blur", () => {
-      saveData();
-    });
+  // Rend le nom de la tâche éditable et sauvegarde après la modification
+  const taskNameCell = row.querySelector(".task-name");
+
+  // Événement : Perte de focus (Blur)
+  taskNameCell.addEventListener("blur", () => {
+    saveData();
+  });
+
+  // Événement : Touche Entrée
+  taskNameCell.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Empêche le saut de ligne
+      taskNameCell.blur(); // Déclenche la sauvegarde
+    }
   });
 }
 
@@ -617,9 +673,15 @@ function renderResponsables(cell, names) {
 }
 
 function openResponsablePopup(cell) {
-  const currentNames = JSON.parse(
-    cell.getAttribute("data-responsables") || "[]"
-  );
+  // Rendre la lecture de l'attribut Responsables plus robuste pour le popup
+  let responsablesAttr = cell.getAttribute("data-responsables");
+
+  // Si l'attribut est null, indéfini, ou la chaîne "undefined", utilise "[]"
+  if (!responsablesAttr || responsablesAttr === "undefined") {
+    responsablesAttr = "[]";
+  }
+
+  const currentNames = JSON.parse(responsablesAttr); // Utilisation de la variable sécurisée
 
   const popup = document.createElement("div");
   popup.className = "planning-popup responsable-selector";
@@ -893,13 +955,14 @@ function setupDragAndDrop() {
         insertPlaceholder(target, mouseY);
       } else if (target.classList.contains("group-header")) {
         const container = target.closest(".group-container");
-        const firstTask = container.querySelector(".task-row");
+        const taskList = container.querySelector(".task-list");
+        const firstTask = taskList ? taskList.querySelector(".task-row") : null;
         if (firstTask) {
           insertPlaceholder(firstTask, mouseY, true);
-        } else {
+        } else if (taskList) {
           const placeholder = document.createElement("div");
           placeholder.className = "drag-placeholder";
-          container.appendChild(placeholder);
+          taskList.appendChild(placeholder);
           dragOverPlaceholder = placeholder;
         }
       }
@@ -920,9 +983,16 @@ function setupDragAndDrop() {
 
       parentContainer.insertBefore(draggedElement, targetElement);
     } else {
+      // Fallback: Si on drop directement sur un group-header sans placeholder
       const target = e.target.closest(".group-header");
       if (target) {
-        target.closest(".group-container").appendChild(draggedElement);
+        // Ajoute en fin de liste de tâches du groupe
+        const taskList = target
+          .closest(".group-container")
+          .querySelector(".task-list");
+        if (taskList) {
+          taskList.appendChild(draggedElement);
+        }
       }
     }
 
